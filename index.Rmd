@@ -12,3 +12,52 @@ output:
 ## Project thoughts
 
 I am interested in exploring data related to...
+```{r}
+library(tidyverse)
+
+pew <- read_csv("Pew Research Center Global Attitudes Spring 2024 Dataset CSV.csv")
+
+```
+```{r}
+glimpse(pew)
+```
+```{r}
+names(pew)
+```
+## Research Proposal
+
+This project examines whether satisfaction with democracy influences how favorably people view the United States. I hypothesize that individuals who are more satisfied with the way democracy works in their country will hold more favorable views of the United States. This expectation is grounded in the idea that the United States is often associated with democratic values and institutions, so individuals who trust democratic governance may feel more positively toward countries that represent those ideals. The key explanatory variable is satisfaction with democracy (`satisfied_democracy`), measured using survey responses indicating how satisfied individuals are with democratic governance in their country. The outcome variable is favorability toward the United States (`fav_us`), which measures respondents’ attitudes toward the U.S. Evidence supporting the hypothesis would show that higher satisfaction with democracy is associated with more favorable views of the United States.
+
+```{r}
+library(tidyverse)
+
+pew <- read_csv("Pew Research Center Global Attitudes Spring 2024 Dataset CSV.csv")
+
+head(pew)
+```
+```{r}
+library(tidyverse)
+
+pew <- read_csv("Pew Research Center Global Attitudes Spring 2024 Dataset CSV.csv")
+library(tidyverse)
+
+pew_clean <- pew %>%
+  filter(!is.na(satisfied_democracy),
+         !is.na(fav_us),
+         satisfied_democracy <= 4,
+         fav_us <= 4)
+```
+```{r}
+summary_data <- pew_clean %>%
+  group_by(satisfied_democracy) %>%
+  summarize(avg_fav_us = mean(fav_us))
+ggplot(summary_data, aes(x = factor(satisfied_democracy), y = avg_fav_us)) +
+  geom_col(fill = "steelblue") +
+  labs(
+    title = "Satisfaction with Democracy and Favorability Toward the U.S.",
+    x = "Satisfaction with Democracy",
+    y = "Average Favorability Toward the U.S."
+  ) +
+  theme_minimal()
+```
+
