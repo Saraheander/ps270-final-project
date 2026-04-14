@@ -2928,6 +2928,50 @@ $ phone_sample                      &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1,…</c
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" alt="" width="624" /></p>
 </div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>summary_table</span> <span class='op'>&lt;-</span> <span class='va'>pew_clean</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>satisfied_democracy</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span></span>
+<span>    avg_fav_us <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>fav_us</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,</span>
+<span>    n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span>  <span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>summary_table</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">satisfied_democracy</th>
+<th style="text-align: right;">avg_fav_us</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2.07</td>
+<td style="text-align: right;">3925</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.28</td>
+<td style="text-align: right;">12461</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2.41</td>
+<td style="text-align: right;">9708</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.51</td>
+<td style="text-align: right;">7689</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The table supports the pattern shown in the visualization. Average favorability toward the United States increases as satisfaction with democracy rises, from 2.07 for those least satisfied to 2.51 for those most satisfied. This suggests a positive relationship between satisfaction with democracy and favorable views of the U.S., which is consistent with my hypothesis.This does not prove causation, but it provides evidence that people who are more satisfied with democracy tend to view the United States more positively.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

@@ -60,4 +60,14 @@ ggplot(summary_data, aes(x = factor(satisfied_democracy), y = avg_fav_us)) +
   ) +
   theme_minimal()
 ```
+```{r}
+summary_table <- pew_clean %>%
+  group_by(satisfied_democracy) %>%
+  summarize(
+    avg_fav_us = mean(fav_us, na.rm = TRUE),
+    n = n()
+  )
 
+knitr::kable(summary_table, digits = 2)
+```
+The table supports the pattern shown in the visualization. Average favorability toward the United States increases as satisfaction with democracy rises, from 2.07 for those least satisfied to 2.51 for those most satisfied. This suggests a positive relationship between satisfaction with democracy and favorable views of the U.S., which is consistent with my hypothesis.This does not prove causation, but it provides evidence that people who are more satisfied with democracy tend to view the United States more positively.
