@@ -8,20 +8,19 @@ output:
 ---
 
 
-
-## Project thoughts
-
-I am interested in exploring data related to...
-```{r}
-library(tidyverse)
-
-pew <- read_csv("Pew Research Center Global Attitudes Spring 2024 Dataset CSV.csv")
-
-```
-
 ## Research Proposal
 
 This project examines whether satisfaction with democracy influences how favorably people view the United States. I hypothesize that individuals who are more satisfied with the way democracy works in their country will hold more favorable views of the United States. This expectation is grounded in the idea that the United States is often associated with democratic values and institutions, so individuals who trust democratic governance may feel more positively toward countries that represent those ideals. The key explanatory variable is satisfaction with democracy (`satisfied_democracy`), measured using survey responses indicating how satisfied individuals are with democratic governance in their country. The outcome variable is favorability toward the United States (`fav_us`), which measures respondents’ attitudes toward the U.S. Evidence supporting the hypothesis would show that higher satisfaction with democracy is associated with more favorable views of the United States.
+
+## Data
+
+The data come from the Pew Research Center Global Attitudes Spring 2024 survey. The independent variable, satisfaction with democracy (*satisfied_democracy*), and the dependent variable, favorability toward the United States (*fav_us*), are both measured on a 1–4 scale, where higher values indicate greater satisfaction and more favorable views.
+
+This is a cross-sectional research design, as the data capture individuals’ attitudes at a single point in time rather than tracking changes over time or using an experimental setup.
+
+To evaluate the hypothesis, I examine whether higher values of satisfaction with democracy are associated with higher values of favorability toward the United States. Evidence supporting the hypothesis would be a positive relationship between these variables, meaning that individuals with higher satisfaction scores also report higher favorability scores.
+
+
 
 ```{r, warning=FALSE, message=FALSE}
 
@@ -41,6 +40,21 @@ pew_clean <- pew %>%
   )
 ```
 ```{r}
+ggplot(pew_clean, aes(x = fav_us)) +
+  geom_histogram(binwidth = 1, fill = "steelblue") +
+  labs(
+    title = "Distribution of Favorability Toward the U.S.",
+    x = "Favorability (1–4)",
+    y = "Count"
+  )
+```
+## Results
+```{r}
+model <- lm(fav_us ~ satisfied_democracy, data = pew_clean)
+summary(model)
+```
+
+```{r}
 summary_data <- pew_clean %>%
   group_by(satisfied_democracy) %>%
   summarize(avg_fav_us = mean(fav_us))
@@ -53,6 +67,7 @@ ggplot(summary_data, aes(x = factor(satisfied_democracy), y = avg_fav_us)) +
   ) +
   theme_minimal()
 ```
+
 ```{r}
 summary_table <- pew_clean %>%
   group_by(satisfied_democracy) %>%
@@ -63,4 +78,11 @@ summary_table <- pew_clean %>%
 
 knitr::kable(summary_table, digits = 2)
 ```
-The table supports the pattern shown in the visualization. Average favorability toward the United States increases as satisfaction with democracy rises, from 2.07 for those least satisfied to 2.51 for those most satisfied. This suggests a positive relationship between satisfaction with democracy and favorable views of the U.S., which is consistent with my hypothesis.This does not prove causation, but it provides evidence that people who are more satisfied with democracy tend to view the United States more positively.
+The results show a clear positive relationship between satisfaction with democracy and favorability toward the United States. Both the visualization and summary table illustrate this pattern: average favorability increases from 2.07 among those least satisfied with democracy to 2.51 among those most satisfied.
+
+The regression analysis confirms this relationship. The coefficient for satisfaction with democracy is approximately 0.136, meaning that for each one-unit increase in satisfaction, favorability toward the United States increases by about 0.14 points on the 1–4 scale. This effect is statistically significant (p < 0.001), indicating that the relationship is unlikely to be due to random chance.
+
+ these results substantively suggest that individuals who are more satisfied with how democracy functions in their country tend to view the United States more favorably, which is consistent with my hypothesis. However, because this analysis is based on observational, cross-sectional data, the relationship should not be interpreted as causal.
+ 
+## Conclusion
+Overall, the results support the hypothesis that individuals who are more satisfied with democracy tend to have more favorable views of the United States. Both the visualization and regression analysis show a clear positive relationship between these variables. However, this analysis is limited because it is observational and cannot establish causation. Other factors such as political ideology, economic conditions, or cultural attitudes may confound this relationship. Future research could improve this analysis by incorporating additional control variables or using longitudinal data to better assess causal relationships over time.
